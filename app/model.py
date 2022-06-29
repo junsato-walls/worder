@@ -51,7 +51,7 @@ class OrderTable(Base):
     __tablename__ = 'orders'
     id = Column(Integer, primary_key=True, autoincrement=True)
     menu_id = Column(Integer, nullable=False)
-    seat = Column(String(6), nullable=False)    
+    seat_id = Column(String(6), nullable=False)    
     price = Column(Integer, nullable=False)
     order_st = Column(Integer, nullable=False)
     bill_st = Column(Integer, nullable=False)
@@ -62,7 +62,7 @@ class OrderTable(Base):
 class Order(BaseModel):
     id: int
     menu_id: int    
-    seat:str
+    seat_id:str
     price: int
     order_st: int
     bill_st: int
@@ -83,6 +83,19 @@ class Category(BaseModel):
     created_at: str
     updated_at: str
     
+class SeatTable(Base):
+    __tablename__ = 'seats'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    seat = Column(String(15), nullable=False)
+    created_at = Column(Timestamp, nullable=False,server_default=text('current_timestamp'))
+    updated_at = Column(Timestamp, nullable=False,server_default=text('current_timestamp on update current_timestamp'))
+    
+# POSTやPUTのとき受け取るRequest Bodyのモデルを定義
+class Seat(BaseModel):
+    id: int
+    seat: str
+    created_at: str
+    updated_at: str
     
     
 def main():

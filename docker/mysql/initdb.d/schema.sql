@@ -20,8 +20,8 @@ CREATE TABLE menus (
 CREATE TABLE orders (
     id INT NOT NULL AUTO_INCREMENT,
     menu_id INT,
+    seat_id INT,
     price INT,
-    seat VARCHAR(6) NOT NULL,
     order_st TINYINT,
     bill_st TINYINT,
     created_at DATETIME,
@@ -32,6 +32,14 @@ CREATE TABLE orders (
 CREATE TABLE categories (
     id INT NOT NULL AUTO_INCREMENT,
     category VARCHAR(15),
+    created_at DATETIME,
+    updated_at DATETIME,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE seats (
+    id INT NOT NULL AUTO_INCREMENT,
+    seat VARCHAR(20),
     created_at DATETIME,
     updated_at DATETIME,
     PRIMARY KEY (id)
