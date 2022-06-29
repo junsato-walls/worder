@@ -14,12 +14,15 @@ INSERT INTO categories (category, created_at) VALUES ("食べ物", CURRENT_DATE(
 INSERT INTO categories (category, created_at) VALUES ("一品物", CURRENT_DATE());
 INSERT INTO categories (category, created_at) VALUES ("ドリンク", CURRENT_DATE());
 
-INSERT INTO orders (menu_id, price, seat, order_st, bill_st, created_at) 
-VALUES (1,850,"A1",0,0,CURRENT_DATE());
-INSERT INTO orders (menu_id, price, seat, order_st, bill_st, created_at) 
-VALUES (2,920,"A1",1,0,CURRENT_DATE());
-INSERT INTO orders (menu_id, price, seat, order_st, bill_st, created_at) 
-VALUES (3,680,"A2",0,1,CURRENT_DATE());
-INSERT INTO orders (menu_id, price, seat, order_st, bill_st, created_at) 
-VALUES (4,480,"A2",1,1,CURRENT_DATE());
+INSERT INTO orders (menu_id, price, seat_id, order_st, bill_st, created_at) 
+VALUES (1,850,1,0,0,CURRENT_DATE());
+INSERT INTO orders (menu_id, price, seat_id, order_st, bill_st, created_at) 
+VALUES (2,920,1,1,0,CURRENT_DATE());
+INSERT INTO orders (menu_id, price, seat_id, order_st, bill_st, created_at) 
+VALUES (3,680,2,0,1,CURRENT_DATE());
+INSERT INTO orders (menu_id, price, seat_id, order_st, bill_st, created_at) 
+VALUES (4,480,3,1,1,CURRENT_DATE());
 
+INSERT INTO seats (seat, created_at) VALUES ("B1", CURRENT_DATE());
+INSERT INTO seats (seat, created_at) VALUES ("B2", CURRENT_DATE());
+INSERT INTO seats (seat, created_at) VALUES ("B3", CURRENT_DATE());

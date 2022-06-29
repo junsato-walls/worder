@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from typing import List  # ネストされたBodyを定義するために必要
 from starlette.middleware.cors import CORSMiddleware  # CORSを回避するために必要
 from db import session  # DBと接続するためのセッション
-from model import UserTable, User, MenuTable, OrderTable, CategoryTable  # 今回使うモデルをインポート
+from model import UserTable, User, MenuTable, Menu, OrderTable, Order, CategoryTable, Category,  SeatTable, Seat  # 今回使うモデルをインポート
 
 import datetime
 
@@ -61,6 +61,14 @@ async def read_menus():
     menus = session.query(MenuTable).all()
     return menus
 
+# カテゴリーごとのメニューリストを取得 GET
+@app.get("/menus/{category_id}")
+async def read_menus(category_id: int):
+    menus = session.query(MenuTable)\
+    .filter(MenuTable.category_id == category_id)\
+    .all()
+    return menus
+
 # メニュー追加
 @app.put("/menus")
 async def create_menu(category_id: int, menu: str, price: int, view_no: int):
@@ -94,42 +102,46 @@ async def create_menu(id:int, category_id: int, menu: str, price: int, view_no: 
 async def read_orders():
     orders = session.query(OrderTable.id,
                            OrderTable.menu_id,
-                           OrderTable.seat,
+                           OrderTable.seat_id,
                            OrderTable.price,
                            OrderTable.order_st,
                            OrderTable.bill_st,
                            OrderTable.created_at,
+                           SeatTable.seat,
                            MenuTable.menu)\
-    .join(OrderTable, MenuTable.id == OrderTable.menu_id)\
+    .join(MenuTable, MenuTable.id == OrderTable.menu_id)\
+    .join(SeatTable, SeatTable.id == OrderTable.seat_id)\
     .filter(OrderTable.order_st == 0)\
     .all()
     return orders
 
 # 注文情報　テーブル毎に取得
-@app.get("/orders/{seat}")
-async def read_orders(seat: str):
+@app.get("/orders/{seat_id}")
+async def read_orders(seat_id: str):
     orders = session.query(OrderTable.id,
                            OrderTable.menu_id,
-                           OrderTable.seat,
+                           OrderTable.seat_id,
                            OrderTable.price,
                            OrderTable.order_st,
                            OrderTable.bill_st,
                            OrderTable.created_at,
+                           SeatTable.seat,
                            MenuTable.menu)\
-    .filter(OrderTable.seat == seat)\
-    .join(OrderTable, MenuTable.id == OrderTable.menu_id)\
+    .join(MenuTable, MenuTable.id == OrderTable.menu_id)\
+    .join(SeatTable, SeatTable.id == OrderTable.seat_id)\
+    .filter(OrderTable.seat_id == seat_id)\
     .all()
     return orders
 
 # 注文追加
 @app.put("/orders")
-async def create_order(menu_id: int, price: int, seat: str):
+async def create_order(menu_id: int, price: int, seat_id: str):
     t_delta = datetime.timedelta(hours=9)
     JST = datetime.timezone(t_delta, 'JST') 
     orders = OrderTable()
     orders.menu_id = menu_id
     orders.price = price
-    orders.seat = seat
+    orders.seat_id = seat_id
     orders.order_st = 0
     orders.bill_st = 0
     orders.created_at = datetime.datetime.now(JST)
@@ -149,10 +161,10 @@ async def update_order(id:int, order_st: int):
 
 # 会計時の処理
 @app.post("/order_bill")
-async def bill_orders(seat: int, bill_st: int):
+async def bill_orders(seat_id: int, bill_st: int):
     t_delta = datetime.timedelta(hours=9)
     JST = datetime.timezone(t_delta, 'JST') 
-    orders = session.query(OrderTable).filter(OrderTable.seat == seat).all()
+    orders = session.query(OrderTable).filter(OrderTable.seat_id == seat_id).all()
     orders.bill_st = bill_st
     orders.updated_at = datetime.datetime.now(JST)
     session.commit()
@@ -174,4 +186,11 @@ async def read_categories(category: str):
     categories.updated_at = datetime.datetime.now(JST)
     session.add(categories)
     session.commit()
+
+# 座席の一覧取得
+@app.get("/seats")
+async def read_categories():
+    categories = session.query(SeatTable).all()
+    return categories
+
 
