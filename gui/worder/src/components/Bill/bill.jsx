@@ -8,7 +8,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import MUIDataTable from "mui-datatables";
 
-
 function Contact() {
   const baseURL = "http://127.0.0.1:8000";
   const [orderData, setOrderData] = useState([])
