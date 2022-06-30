@@ -13,6 +13,15 @@ INSERT INTO menus (category_id, menu, price, view_no, visible_st, created_at) VA
 INSERT INTO categories (category, created_at) VALUES ("食べ物", CURRENT_DATE());
 INSERT INTO categories (category, created_at) VALUES ("一品物", CURRENT_DATE());
 INSERT INTO categories (category, created_at) VALUES ("ドリンク", CURRENT_DATE());
+INSERT INTO categories (category, created_at) VALUES ("ご飯", CURRENT_DATE());
+INSERT INTO categories (category, created_at) VALUES ("パン", CURRENT_DATE());
+INSERT INTO categories (category, created_at) VALUES ("麺", CURRENT_DATE());
+INSERT INTO categories (category, created_at) VALUES ("特別メニュー", CURRENT_DATE());
+INSERT INTO categories (category, created_at) VALUES ("期間限定", CURRENT_DATE());
+INSERT INTO categories (category, created_at) VALUES ("サラダ", CURRENT_DATE());
+INSERT INTO categories (category, created_at) VALUES ("デザート", CURRENT_DATE());
+INSERT INTO categories (category, created_at) VALUES ("ソフトドリンク", CURRENT_DATE());
+INSERT INTO categories (category, created_at) VALUES ("アルコール", CURRENT_DATE());
 
 INSERT INTO orders (menu_id, price, seat_id, order_st, bill_st, created_at) 
 VALUES (1,850,1,0,0,CURRENT_DATE());
