@@ -112,6 +112,7 @@ async def read_orders():
     .join(MenuTable, MenuTable.id == OrderTable.menu_id)\
     .join(SeatTable, SeatTable.id == OrderTable.seat_id)\
     .filter(OrderTable.order_st == 0)\
+    .filter(OrderTable.bill_st == 0)\
     .all()
     orders
     return orders
@@ -131,6 +132,7 @@ async def read_orders(seat_id: str):
     .join(MenuTable, MenuTable.id == OrderTable.menu_id)\
     .join(SeatTable, SeatTable.id == OrderTable.seat_id)\
     .filter(OrderTable.seat_id == seat_id)\
+    .filter(OrderTable.bill_st == 0)\
     .all()
     return orders
 
@@ -166,8 +168,9 @@ async def bill_orders(seat_id: int, bill_st: int):
     t_delta = datetime.timedelta(hours=9)
     JST = datetime.timezone(t_delta, 'JST') 
     orders = session.query(OrderTable).filter(OrderTable.seat_id == seat_id).all()
-    orders.bill_st = bill_st
-    orders.updated_at = datetime.datetime.now(JST)
+    for order in orders:
+        order.bill_st = bill_st
+        order.updated_at = datetime.datetime.now(JST)
     session.commit()
 
 #  カテゴリ一覧取得
@@ -190,8 +193,8 @@ async def read_categories(category: str):
 
 # 座席の一覧取得
 @app.get("/seats")
-async def read_categories():
-    categories = session.query(SeatTable).all()
-    return categories
+async def read_seats():
+    seats = session.query(SeatTable).all()
+    return seats
 
 
