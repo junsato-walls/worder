@@ -113,6 +113,7 @@ async def read_orders():
     .join(SeatTable, SeatTable.id == OrderTable.seat_id)\
     .filter(OrderTable.order_st == 0)\
     .all()
+    orders
     return orders
 
 # 注文情報　テーブル毎に取得

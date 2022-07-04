@@ -4,9 +4,15 @@ import Header from '../Common/header';
 import Button from '@mui/material/Button';
 import axios from "axios";
 import DeleteIcon from '@mui/icons-material/Delete';
-//import CheckIcon from '@mui/icons-material/Check';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import MUIDataTable from "mui-datatables";
+//select box
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Container from '@mui/material/Container';
 
 function Contact() {
   const baseURL = "http://127.0.0.1:8000";
@@ -38,6 +44,8 @@ function Contact() {
     ])
     GetOrder()
   }, [])
+
+
 
   useEffect(() => {
     if (selectButton != null) {
@@ -76,6 +84,12 @@ function Contact() {
       GetOrder()
   }
 
+  const [age, setAge] = React.useState('');
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
+
   const options = {
     selectableRowsHeader: false,
     selectableRowsHideCheckboxes: true,
@@ -84,19 +98,40 @@ function Contact() {
     print: false,
     viewColumns: false,
     filter: false,
-    sort: false
+    sort: false,
+    pagination: false
   }
 
   return (
     <>
       <Header />
       <div><Button variant="solid" onClick={testdataUpdate}>更新</Button></div>
+            <Container maxWidth="md">
+        <Box sx={{ minWidth: 120, maxWidth:200}}>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Age</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={age}
+                label="Age"
+                onChange={handleChange}
+              >
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+          </FormControl>
+        </Box>
+      </Container>
+      <Container maxWidth="md">
       <MUIDataTable
         title=""
         data={orderData}
         columns={columns}
         options={options}
       />
+      </Container>
     </>
   )
 }
