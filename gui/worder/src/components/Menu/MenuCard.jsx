@@ -33,6 +33,7 @@ function menuCard(props) {
         + '&price=' + menu.price
         + '&seat_id=' + seat).then(res => {
           if (res.status === 200) {
+            console.log(res.status)
             console.log('ステータス:200')
             alert('注文が完了しました。');
           }

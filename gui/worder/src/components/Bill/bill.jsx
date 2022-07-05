@@ -3,8 +3,6 @@ import { useState, useEffect } from "react";
 import Header from '../Common/header';
 import Button from '@mui/material/Button';
 import axios from "axios";
-import DeleteIcon from '@mui/icons-material/Delete';
-import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import SendIcon from '@mui/icons-material/Send';
 //select box
 import Box from '@mui/material/Box';
@@ -34,20 +32,21 @@ function Contact() {
     if (selectButton != null) {
       axios.post(baseURL + '/orders?id=' + orderData[selectButton.id].id + '&order_st=' + selectButton.st ).then(res => {
         console.log(res.status)
-        if (res.status == 200) {
+        if (res.status === 200) {
           GetOrder()
         }
       })
     }
     GetOrder()
     GetSeats()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectButton])
 
   //シート番号採番
   useEffect(() => {
     if (selectSeat != null) {
       axios.get(baseURL + '/orders/' + selectSeat).then(res => {
-        if (res.status == 200) {
+        if (res.status === 200) {
           setOrderData(res.data)
         }
       })
@@ -62,7 +61,6 @@ function Contact() {
         price = price + order.price
       ))
       setTotalPrice(price)
-      console.log(price)
       }
   }, [orderData])
 
@@ -88,6 +86,7 @@ function Contact() {
         if (res.status === 200) {
           console.log('ステータス:200')
           alert('会計が完了しました');
+          setSelectButton(null)
           GetOrder()
         }
     })

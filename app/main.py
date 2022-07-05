@@ -1,7 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from typing import List  # ネストされたBodyを定義するために必要
 from starlette.middleware.cors import CORSMiddleware  # CORSを回避するために必要
 from db import session  # DBと接続するためのセッション
+from sqlalchemy.exc import SQLAlchemyError
 from model import UserTable, User, MenuTable, Menu, OrderTable, Order, CategoryTable, Category,  SeatTable, Seat  # 今回使うモデルをインポート
 
 import datetime
@@ -139,18 +140,23 @@ async def read_orders(seat_id: str):
 # 注文追加
 @app.put("/orders")
 async def create_order(menu_id: int, price: int, seat_id: str):
-    t_delta = datetime.timedelta(hours=9)
-    JST = datetime.timezone(t_delta, 'JST') 
-    orders = OrderTable()
-    orders.menu_id = menu_id
-    orders.price = price
-    orders.seat_id = seat_id
-    orders.order_st = 0
-    orders.bill_st = 0
-    orders.created_at = datetime.datetime.now(JST)
-    orders.updated_at = datetime.datetime.now(JST)
-    session.add(orders)
-    session.commit()
+    try:
+        t_delta = datetime.timedelta(hours=9)
+        JST = datetime.timezone(t_delta, 'JST') 
+        orders = OrderTable()
+        orders.menu_id = menu_id
+        orders.price = price
+        orders.seat_id = seat_id
+        orders.order_st = 0
+        orders.bill_st = 0
+        orders.created_at = datetime.datetime.now(JST)
+        orders.updated_at = datetime.datetime.now(JST)
+        session.add(orders)
+        session.commit()
+    except SQLAlchemyError:
+        session.rollback()
+    finally:
+        session.close()
 
 #料理提供、注文キャンセル時の処理
 @app.post("/orders")
