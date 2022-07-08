@@ -134,6 +134,7 @@ async def read_orders(seat_id: str):
     .join(SeatTable, SeatTable.id == OrderTable.seat_id)\
     .filter(OrderTable.seat_id == seat_id)\
     .filter(OrderTable.bill_st == 0)\
+    .filter(OrderTable.order_st == 0)\
     .all()
     return orders
 
@@ -167,6 +168,47 @@ async def update_order(id:int, order_st: int):
     orders.order_st = order_st
     orders.updated_at = datetime.datetime.now(JST)
     session.commit()
+
+# 注文情報(提供済みのもののみ表示)
+@app.get("/orders_Provided")
+async def read_orders():
+    orders = session.query(OrderTable.id,
+                           OrderTable.menu_id,
+                           OrderTable.seat_id,
+                           OrderTable.price,
+                           OrderTable.order_st,
+                           OrderTable.bill_st,
+                           OrderTable.created_at,
+                           SeatTable.seat,
+                           MenuTable.menu)\
+    .join(MenuTable, MenuTable.id == OrderTable.menu_id)\
+    .join(SeatTable, SeatTable.id == OrderTable.seat_id)\
+    .filter(OrderTable.order_st == 1)\
+    .filter(OrderTable.bill_st == 0)\
+    .all()
+    orders
+    return orders
+
+# 注文情報(提供済みのもののみ表示)　テーブル毎に表示
+@app.get("/orders_Provided/{seat_id}")
+async def read_orders(seat_id: str):
+    orders = session.query(OrderTable.id,
+                           OrderTable.menu_id,
+                           OrderTable.seat_id,
+                           OrderTable.price,
+                           OrderTable.order_st,
+                           OrderTable.bill_st,
+                           OrderTable.created_at,
+                           SeatTable.seat,
+                           MenuTable.menu)\
+    .join(MenuTable, MenuTable.id == OrderTable.menu_id)\
+    .join(SeatTable, SeatTable.id == OrderTable.seat_id)\
+    .filter(OrderTable.seat_id == seat_id)\
+    .filter(OrderTable.order_st == 1)\
+    .filter(OrderTable.bill_st == 0)\
+    .all()
+    return orders
+
 
 # 会計時の処理
 @app.post("/order_bill")

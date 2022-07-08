@@ -25,12 +25,12 @@ function Contact() {
   const [orderData, setOrderData] = useState([])
   const [selectButton, setSelectButton] = useState(null)
   const [SeatsData, setSeatsData] = useState([])
-  const [selectSeat,setSelectSeat] = useState('');
-  const [TotalPrice,setTotalPrice] = useState(0);
- 
+  const [selectSeat, setSelectSeat] = useState('');
+  const [TotalPrice, setTotalPrice] = useState(0);
+
   useEffect(() => {
     if (selectButton != null) {
-      axios.post(baseURL + '/orders?id=' + orderData[selectButton.id].id + '&order_st=' + selectButton.st ).then(res => {
+      axios.post(baseURL + '/orders?id=' + orderData[selectButton.id].id + '&order_st=' + selectButton.st).then(res => {
         console.log(res.status)
         if (res.status === 200) {
           GetOrder()
@@ -39,15 +39,17 @@ function Contact() {
     }
     GetOrder()
     GetSeats()
+    // ↓ Warningを消すために実装のため消さないこと
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectButton])
 
   //シート番号採番
   useEffect(() => {
     if (selectSeat != null) {
-      axios.get(baseURL + '/orders/' + selectSeat).then(res => {
+      axios.get(baseURL + '/orders_Provided/' + selectSeat).then(res => {
         if (res.status === 200) {
           setOrderData(res.data)
+          console.log(res.data)
         }
       })
     }
@@ -61,12 +63,12 @@ function Contact() {
         price = price + order.price
       ))
       setTotalPrice(price)
-      }
+    }
   }, [orderData])
 
   //オーダー情報取得
   const GetOrder = () => {
-    axios.get(baseURL + '/orders').then(res => {
+    axios.get(baseURL + '/orders_Provided').then(res => {
       setOrderData(res.data)
       console.log(res.data)
       console.log(orderData)
@@ -77,18 +79,19 @@ function Contact() {
   const GetSeats = () => {
     axios.get(baseURL + '/seats').then(res => {
       setSeatsData(res.data)
+      console.log(res.data)
     })
   }
 
-  const BillComplete =() =>{
-      axios.post(baseURL + '/order_bill?seat_id=' + selectSeat + '&bill_st=1').then(res =>{
-        console.log(res.status)
-        if (res.status === 200) {
-          console.log('ステータス:200')
-          alert('会計が完了しました');
-          setSelectButton(null)
-          GetOrder()
-        }
+  const BillComplete = () => {
+    axios.post(baseURL + '/order_bill?seat_id=' + selectSeat + '&bill_st=1').then(res => {
+      console.log(res.status)
+      if (res.status === 200) {
+        console.log('ステータス:200')
+        alert('会計が完了しました');
+        setSelectButton(null)
+        GetOrder()
+      }
     })
   }
 
@@ -100,47 +103,47 @@ function Contact() {
   return (
     <>
       <Header />
-            <Container maxWidth="md">
-              <Box sx={{ minWidth: 120, maxWidth:200}}>
-                <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">席番号</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={selectSeat}
-                      label="席番号"
-                      onChange={handleChange}
-                    >
-                    {SeatsData.map(seats =>
-                        <MenuItem value={seats.id}>{seats.seat}</MenuItem>
-                    )}
-                    </Select>
-                </FormControl>
-              </Box>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }} aria-label="spanning table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="">注文品名</TableCell>
-              <TableCell align="">金額</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {orderData.map((SelectOrderData) => (
+      <Container maxWidth="md">
+        <Box sx={{ minWidth: 120, maxWidth: 200 }}>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">席番号</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={selectSeat}
+              label="席番号"
+              onChange={handleChange}
+            >
+              {SeatsData.map(seats =>
+                <MenuItem value={seats.id}>{seats.seat}</MenuItem>
+              )}
+            </Select>
+          </FormControl>
+        </Box>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 700 }} aria-label="spanning table">
+            <TableHead>
               <TableRow>
-                <TableCell>{SelectOrderData.menu}</TableCell>
-                <TableCell>{SelectOrderData.price}</TableCell>
+                <TableCell align="">注文品名</TableCell>
+                <TableCell align="">金額</TableCell>
               </TableRow>
-            ))}
-            <TableRow>
-              <TableCell align="center">合計</TableCell>
-              <TableCell align="">{TotalPrice}</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <div margin align="right"><Button variant="contained" endIcon={<SendIcon />} onClick={BillComplete}>会計</Button></div>
-    </Container>
+            </TableHead>
+            <TableBody>
+              {orderData.map((SelectOrderData) => (
+                <TableRow>
+                  <TableCell>{SelectOrderData.menu}</TableCell>
+                  <TableCell>{SelectOrderData.price}</TableCell>
+                </TableRow>
+              ))}
+              <TableRow>
+                <TableCell align="center">合計</TableCell>
+                <TableCell align="">{TotalPrice}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <div margin align="right"><Button variant="contained" endIcon={<SendIcon />} onClick={BillComplete}>会計</Button></div>
+      </Container>
 
     </>
   )

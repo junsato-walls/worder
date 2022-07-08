@@ -29,6 +29,7 @@ function menuCard(props) {
   const img = require('./curry.jpg')
   const createOrder = () => {
     if (seat !== '') {
+      console.log(seat)
       axios.put(baseURL + '/orders?menu_id=' + menu.id
         + '&price=' + menu.price
         + '&seat_id=' + seat).then(res => {

@@ -2,13 +2,28 @@ import * as React from 'react';
 import { useState, useEffect } from "react";
 import MenuTab from './MenuTab';
 import axios from "axios";
-import { useLocation, } from 'react-router-dom';
 
 //グリッドで分けている部分
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import Typography from '@mui/material/Typography';
+
+//modal
+import Button from '@mui/material/Button';
+import Modal from '@mui/material/Modal';
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -39,9 +54,11 @@ function a11yProps(index) {
 
 function Menu() {
   const baseURL = "http://127.0.0.1:8000";
-  const search = useLocation().search;
   const [categoryData, setCategoryData] = useState([])
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   useEffect(() => {
     GetCategory()
@@ -70,15 +87,26 @@ function Menu() {
             allowScrollButtonsMobile
             aria-label="scrollable force tabs example"
           >
-              {categoryData.map((category, i) =>
-                <Tab label={category.category} {...a11yProps(i)} />
-              )}
+            {categoryData.map((category, i) =>
+              <Tab label={category.category} {...a11yProps(i)} />
+            )}
 
+            <Button onClick={handleOpen}>注文履歴</Button>
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+
+              </Box>
+            </Modal>
           </Tabs>
         </Box>
         {categoryData.map((category, i) =>
           <TabPanel value={value} index={i}>
-            <MenuTab category_id={category.id}/>
+            <MenuTab category_id={category.id} />
           </TabPanel>
         )}
       </Box>
