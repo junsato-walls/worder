@@ -15,7 +15,8 @@ export default function DenseAppBar() {
           <Typography variant="h6" color="inherit" component="div">
             <Link style={{ textDecoration: 'none',color:'white'}} to="/order">オーダー画面　</Link>
             <Link style={{ textDecoration: 'none',color:'white'}} to="/bill">会計画面　</Link>
-            <Link style={{ textDecoration: 'none',color:'white'}} to="/admin">メニュー管理画面　</Link>
+            <Link style={{ textDecoration: 'none',color:'white'}} to="/add_menu">メニュー追加　</Link>
+            <Link style={{ textDecoration: 'none',color:'white'}} to="/add_category">カテゴリ追加　</Link>
           </Typography>
         </Toolbar>
       </AppBar>

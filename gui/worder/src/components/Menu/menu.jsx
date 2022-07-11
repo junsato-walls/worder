@@ -83,7 +83,7 @@ function Menu() {
   useEffect(() => {
     const query = new URLSearchParams(search);
     setSeat(query.get("seat_id"))
-    console.log(search)
+    console.log(seat)
     GetCategory()
     GetOrder()
   }, [])
