@@ -23,12 +23,7 @@ function About() {
   const [orderData, setOrderData] = useState([])
   const [selectButton, setSelectButton] = useState(null)
 
-  useEffect(() => {
-    GetOrder()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  useEffect(() => {
+   useEffect(() => {
     if (selectButton != null) {
       console.log(selectButton.id)
       console.log(selectButton.st)
@@ -39,6 +34,7 @@ function About() {
         }
       })
     }
+    GetOrder()
     // ↓ Warningを消すために実装のため消さないこと
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectButton])
@@ -61,6 +57,7 @@ function About() {
     <>
       <Header />
       <Container maxWidth="md">
+      <h2>オーダー管理画面</h2>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 700 }} aria-label="spanning table">
             <TableHead>

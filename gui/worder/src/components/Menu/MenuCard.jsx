@@ -24,9 +24,10 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 function menuCard(props) {
+  const imgname = 'curry';
   const baseURL = "http://127.0.0.1:8000";
   const { menu, seat } = props;
-  const img = require('./curry.jpg')
+  const img = require('./' + imgname + '.jpg')
   const createOrder = () => {
     if (seat !== '') {
       console.log(seat)

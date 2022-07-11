@@ -104,6 +104,7 @@ function Contact() {
     <>
       <Header />
       <Container maxWidth="md">
+      <h2>会計画面</h2>
         <Box sx={{ minWidth: 120, maxWidth: 200 }}>
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">席番号</InputLabel>
