@@ -67,7 +67,7 @@ function AddMenu() {
   return (
     <>
       <Header />
-      <h2>メニューの追加 </h2>
+      <h2>カテゴリ追加 </h2>
       <div align="center">
         <Box sx={{ minWidth: 120, maxWidth: 225 }}>
           <FormControl fullWidth>
