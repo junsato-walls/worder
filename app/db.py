@@ -11,7 +11,7 @@ password = "password"
 host = "db"  # docker-composeで定義したMySQLのサービス名
 database_name = "worder"
 
-DATABASE = f'mysql://%s:%s@%s/%s?charset=utf8mb4' % (
+DATABASE = 'mysql://%s:%s@%s/%s?charset=utf8' % (
     user_name,
     password,
     host,

@@ -4,7 +4,6 @@ from starlette.middleware.cors import CORSMiddleware  # CORSを回避するた�
 from db import session  # DBと接続するためのセッション
 from sqlalchemy.exc import SQLAlchemyError
 from model import UserTable, User, MenuTable, Menu, OrderTable, Order, CategoryTable, Category,  SeatTable, Seat  # 今回使うモデルをインポート
-
 import datetime
 
 app = FastAPI()
@@ -284,4 +283,14 @@ async def read_seats():
     seats = session.query(SeatTable).all()
     return seats
 
-
+#  座席追加
+@app.put("/seats")
+async def read_seats(seat: str):
+    t_delta = datetime.timedelta(hours=9)
+    JST = datetime.timezone(t_delta, 'JST') 
+    seats = SeatTable()
+    seats.seat = seat
+    seats.created_at = datetime.datetime.now(JST)
+    seats.updated_at = datetime.datetime.now(JST)
+    session.add(seats)
+    session.commit()

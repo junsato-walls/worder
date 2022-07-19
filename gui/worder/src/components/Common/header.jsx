@@ -17,6 +17,7 @@ export default function DenseAppBar() {
             <Link style={{ textDecoration: 'none',color:'white'}} to="/bill">会計画面　</Link>
             <Link style={{ textDecoration: 'none',color:'white'}} to="/add_menu">メニュー追加　</Link>
             <Link style={{ textDecoration: 'none',color:'white'}} to="/add_category">カテゴリ追加　</Link>
+            <Link style={{ textDecoration: 'none',color:'white'}} to="/add_seat">シート番号追加</Link>
           </Typography>
         </Toolbar>
       </AppBar>
