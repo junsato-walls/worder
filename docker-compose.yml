@@ -35,6 +35,22 @@ services:
       - 8000:8000
     volumes:
       - ./app:/usr/src/server
+    tty: true
+    networks:
+      - local-net
+
+  # React
+  front:
+    container_name: "node"
+    # path配下のDockerfile読み込み
+    build:
+      context: . 
+      dockerfile: ./docker/front/Dockerfile
+    volumes:
+      - ./gui:/usr/src/gui
+    ports:
+      - 3000:3000
+    tty: true
     networks:
       - local-net
 
