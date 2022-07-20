@@ -71,7 +71,6 @@ function Contact() {
     axios.get(baseURL + '/orders_Provided').then(res => {
       setOrderData(res.data)
       console.log(res.data)
-      console.log(orderData)
     })
   }
 
@@ -104,7 +103,7 @@ function Contact() {
     <>
       <Header />
       <Container maxWidth="md">
-      <h2>会計画面</h2>
+        <h2>会計画面</h2>
         <Box sx={{ minWidth: 120, maxWidth: 200 }}>
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">席番号</InputLabel>

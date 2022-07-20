@@ -211,7 +211,7 @@ async def read_orders(seat_id: str):
 # 注文履歴情報
 @app.get("/orders_history")
 async def read_orders():
-    orders = session.query(OrderTable.id,
+    orders_history = session.query(OrderTable.id,
                            OrderTable.menu_id,
                            OrderTable.seat_id,
                            OrderTable.price,
@@ -222,16 +222,14 @@ async def read_orders():
                            MenuTable.menu)\
     .join(MenuTable, MenuTable.id == OrderTable.menu_id)\
     .join(SeatTable, SeatTable.id == OrderTable.seat_id)\
-    .filter(OrderTable.order_st == 0 or OrderTable.order_st == 1 )\
     .filter(OrderTable.bill_st == 0)\
     .all()
-    orders
-    return orders
+    return orders_history
 
 # 注文履歴情報　テーブル毎に表示
 @app.get("/orders_history/{seat_id}")
 async def read_orders(seat_id: str):
-    orders = session.query(OrderTable.id,
+    orders_history = session.query(OrderTable.id,
                            OrderTable.menu_id,
                            OrderTable.seat_id,
                            OrderTable.price,
@@ -243,10 +241,9 @@ async def read_orders(seat_id: str):
     .join(MenuTable, MenuTable.id == OrderTable.menu_id)\
     .join(SeatTable, SeatTable.id == OrderTable.seat_id)\
     .filter(OrderTable.seat_id == seat_id)\
-    .filter(OrderTable.order_st == 0 or OrderTable.order_st == 1 )\
     .filter(OrderTable.bill_st == 0)\
     .all()
-    return orders
+    return orders_history
 
 # 会計時の処理
 @app.post("/order_bill")
