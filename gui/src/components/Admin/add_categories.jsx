@@ -22,7 +22,7 @@ function AddCategory() {
 
   useEffect(() => {
     GetCategory()
-  },[])
+  }, [])
 
   //登録ボタン動作
   const InsertCategory = () => {
@@ -68,8 +68,6 @@ function AddCategory() {
           </Table>
         </TableContainer>
       </Container>
-
-
     </>
   )
 }

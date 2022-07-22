@@ -16,13 +16,12 @@ function App() {
           <Route path="/order" element={<Order />} />
           <Route path="/bill" element={<Bill />} />
           <Route path="/add_menu" element={<AdminAddMenu />} />
-          <Route path="/add_category" element={<AdminAddCategories />} />
+          <Route path="/add_categories" element={<AdminAddCategories />} />
           <Route path="/add_seat" element={<AdminAddSeat />} />
           <Route path="*" element={<NoMatch />} />
         </Routes>
     </div>
   );
 }
-
 
 export default App;

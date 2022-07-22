@@ -5,19 +5,28 @@ import { useState, useEffect } from "react";
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
-// import { useCallback } from 'react';
-// import { useDropzone } from 'react-dropzone';
 import axios from "axios";
+import Typography from '@mui/material/Typography';
 //select box
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+//table
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Container from '@mui/material/Container';
 
 function AddMenu() {
   const baseURL = "http://127.0.0.1:8000";
   const [menu, setMenu] = useState('')
+  const [menuData, setMenuData] = useState([]);
   const [price, setPrice] = useState('')
   const [view_no, setView_no] = useState('')
   const [CategoryData, setCategoryData] = useState([])
@@ -25,15 +34,10 @@ function AddMenu() {
 
   useEffect(() => {
     GetCategory()
+    GetMenu()
     // ↓ Warningを消すために実装のため消さないこと
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  // const onDrop = useCallback((acceptedFiles) => {
-  //   // Do something with the files
-  //   console.log('acceptedFiles:', acceptedFiles);
-  // }, []);
-  // const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   //登録ボタン動作
   const InsertMenu = () => {
@@ -58,11 +62,17 @@ function AddMenu() {
     })
   }
 
+  //メニューデータ取得
+  const GetMenu = () => {
+    axios.get(baseURL + '/menus').then(res => {
+        setMenuData(res.data)
+    })
+}
+
   //セレクトボックス変更時、カテゴリ番号取得
   const handleChange = (event) => {
     setSelectCategoryID(event.target.value);
   };
-
 
   return (
     <>
@@ -74,7 +84,6 @@ function AddMenu() {
             <InputLabel id="demo-simple-select-label">カテゴリ選択</InputLabel>
             <Select
               labelId="demo-simple-select-label"
-
               id="demo-simple-select"
               value={SelectCategoryID}
               label="カテゴリ選択"
@@ -88,19 +97,34 @@ function AddMenu() {
         </Box>
       </div>
       <div><TextField id="outlined-basic" label="メニュー名" variant="outlined" onChange={(event) => setMenu(event.target.value)} /></div>
-      <div><TextField id="outlined-basic" label="金額" variant="outlined" onChange={(event) => setPrice(event.target.value)} /></div>
+      <div><TextField id="outlined-basic" label="価格" variant="outlined" onChange={(event) => setPrice(event.target.value)} /></div>
       <div><TextField id="outlined-basic" label="順番" variant="outlined" onChange={(event) => setView_no(event.target.value)} /></div>
       <div><Button /></div>
-
-      {/* <div {...getRootProps()} style={style}>
-        <input {...getInputProps()} />
-        {
-          isDragActive ?
-            <p>この画像を追加</p> :
-            <p>ここに画像をドラッグ＆ドロップ</p>
-        }
-      </div> */}
       <div><Button variant="contained" endIcon={<SendIcon />} onClick={InsertMenu}>登録</Button></div>
+      <Container maxWidth="sm">
+      <Typography variant="h6" align="">登録済みメニュー</Typography>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 450 }} aria-label="spanning table">
+            <TableHead>
+              <TableRow>
+              <TableCell align="center">メニュー名</TableCell>
+                <TableCell align="center">価格</TableCell>
+                <TableCell align="center">表示順番</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {menuData.map((SelectOrderData) => (
+                <TableRow>
+                  <TableCell align="center">{SelectOrderData.menu}</TableCell>
+                  <TableCell align="center">{SelectOrderData.price}</TableCell>
+                  <TableCell align="center">{SelectOrderData.view_no}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Container>
+
     </>
   )
 }
