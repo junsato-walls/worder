@@ -13,6 +13,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
+import CurrencyYenIcon from '@mui/icons-material/CurrencyYen';
 
 const drawerWidth = 240;
 
@@ -54,7 +55,7 @@ function ClippedDrawer() {
               <ListItem disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
-                    <InboxIcon />
+                    <CurrencyYenIcon />
                   </ListItemIcon>
                   <ListItemText primary="会計確認" />
                 </ListItemButton>
