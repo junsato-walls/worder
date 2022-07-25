@@ -5,7 +5,6 @@ import axios from "axios";
 import { useLocation, } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Fab from '@mui/material/Fab';
-import NavigationIcon from '@mui/icons-material/Navigation';
 
 //modal
 import Box from '@mui/material/Box';
@@ -21,6 +20,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
+import RestaurantIcon from '@mui/icons-material/Restaurant';
 
 const style = {
     position: 'absolute',
@@ -92,7 +92,7 @@ function MenuTab(props) {
             </Box>
             <div>
                 <Fab variant="extended">
-                    <NavigationIcon sx={{ mr: 1 }} />
+                    <RestaurantIcon sx={{ mr: 1 }} />
                     <Button onClick={handleOpen}>注文履歴</Button>
                     <Modal
                         open={open}
