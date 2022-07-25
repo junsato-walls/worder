@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import { useState, useEffect } from "react";
 
 //グリッドで分けている部分
 import { styled } from '@mui/material/styles';

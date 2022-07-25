@@ -40,7 +40,7 @@ function ClippedDrawer() {
         <Toolbar />
         <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
           <List>
-          <Typography variant="subtitle1" align="">お客様管理メニュー</Typography>
+            <Typography variant="subtitle1" align="">お客様管理メニュー</Typography>
             <Link style={{ textDecoration: 'none', color: 'black' }} to="/order">
               <ListItem disablePadding>
                 <ListItemButton>
@@ -67,7 +67,7 @@ function ClippedDrawer() {
         <Divider />
         <nav aria-label="secondary mailbox folders">
           <List>
-          <Typography variant="subtitle1" align="">各種追加メニュー</Typography>
+            <Typography variant="subtitle1" align="">各種追加メニュー</Typography>
             <Link style={{ textDecoration: 'none', color: 'black' }} to="/add_menu">
               <ListItem disablePadding>
                 <ListItemButton>
