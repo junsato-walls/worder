@@ -24,7 +24,7 @@ import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
 
 function AddMenu() {
-  const baseURL = "http://127.0.0.1:8000";
+  const baseURL = "http://"+process.env.REACT_APP_IP_PORT;
   const [menu, setMenu] = useState('')
   const [menuData, setMenuData] = useState([]);
   const [price, setPrice] = useState('')

@@ -19,7 +19,7 @@ import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
 
 function About() {
-  const baseURL = "http://127.0.0.1:8000";
+  const baseURL = "http://"+process.env.REACT_APP_IP_PORT;
   const [orderData, setOrderData] = useState([])
   const [selectButton, setSelectButton] = useState(null)
 

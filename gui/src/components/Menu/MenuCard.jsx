@@ -23,7 +23,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 function menuCard(props) {
-  const baseURL = "http://127.0.0.1:8000";
+  const baseURL = "http://"+process.env.REACT_APP_IP_PORT;
   const { menu, seat } = props;
   const img = require('./img/' + menu.id + '.jpg')
   const createOrder = () => {

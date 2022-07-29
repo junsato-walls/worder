@@ -37,7 +37,7 @@ function a11yProps(index) {
 }
 
 function Menu() {
-  const baseURL = "http://127.0.0.1:8000";
+  const baseURL = "http://"+process.env.REACT_APP_IP_PORT;
   const [categoryData, setCategoryData] = useState([])
   const [value, setValue] = useState(0);
   const [orderData, setOrderData] = useState([])
