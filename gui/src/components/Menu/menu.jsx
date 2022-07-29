@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect } from "react";
 import MenuTab from './MenuTab';
+import OrdersHistory from './orders_history';
 import axios from "axios";
 //グリッドで分けている部分
 import Box from '@mui/material/Box';
@@ -81,6 +82,7 @@ function Menu() {
             {categoryData.map((category, i) =>
               <Tab label={category.category} {...a11yProps(i)} />
             )}
+            <OrdersHistory />
           </Tabs>
         </Box>
         {categoryData.map((category, i) =>
@@ -89,6 +91,8 @@ function Menu() {
           </TabPanel>
         )}
       </Box>
+
+      
     </>
   )
 }

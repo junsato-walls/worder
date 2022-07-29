@@ -54,7 +54,7 @@ function AddSeats() {
             <TableHead>
               <TableRow>
                 <TableCell align="right">ID</TableCell>
-                <TableCell align="center">カテゴリ名</TableCell>
+                <TableCell align="center">シート番号</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
