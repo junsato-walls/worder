@@ -36,7 +36,7 @@ const style = {
 
 function MenuTab(props) {
     const { category_id } = props;
-    const baseURL = "http://127.0.0.1:8000";
+    const baseURL = "http://"+process.env.REACT_APP_IP_PORT;
     const search = useLocation().search;
     const [menuData, setMenuData] = useState([]);
     const [seat, setSeat] = useState('');
